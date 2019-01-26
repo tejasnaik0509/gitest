@@ -1,11 +1,22 @@
 //creating web server using http module
 var http = require('http'); //for "https" use https instead of http. 
+var fs = require('fs'); //for fileSystem
+var path = require('path'); //for files path
 
 http.createServer(function(req, res){
 
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write("Hello from server");
-    res.end();
+    if(req.url === '/'){
+        fs.readFile("./public/index.html", "UTF-8", function(err, html){
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            //res.write("Hello from server");
+            res.end();
+        });
+    }else if(req.url.match("\.css$")){
+        var cssPath = path.join(__dirname, "public", req.url);
+        var fileStream = fs.createReadStream(cssPath, "UTF-8");
+        res.writeHead(200, {"Content-Type": "text/css"});
+        fileStream.pipe(res);
+    }
 
 }).listen(3000);
 
