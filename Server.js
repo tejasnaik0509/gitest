@@ -1,5 +1,5 @@
 //creating web server using http module
-var http = Noderequire('http');
+var http = require('http');
 
 http.createServer(function(req, res){
 
