@@ -9,10 +9,10 @@ http.createServer(function(req, res){
         fs.readFile("./public/index.html", "UTF-8", function(err, html){
             res.writeHead(200, {'Content-Type': 'text/html'});
             //res.write("Hello from server");
-            res.end();
+            res.end(html);
         });
     }else if(req.url.match("\.css$")){
-        var cssPath = path.join(__dirname, "public", req.url);
+        var cssPath = path.join(__dirname, 'public', req.url);
         var fileStream = fs.createReadStream(cssPath, "UTF-8");
         res.writeHead(200, {"Content-Type": "text/css"});
         fileStream.pipe(res);
